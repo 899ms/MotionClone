@@ -59,6 +59,8 @@ The repository excludes user projects, media, logs, environment files, dependenc
 
 The homepage is a GitHub project showcase with a live local comparison, a short walkthrough, setup instructions, and support links. The application remains at `/?workspace=1`; existing project links still work.
 
+The demo supports side-by-side or wipe comparison, playback speed, and fullscreen. A separate illustrative scene lets visitors toggle text, shapes, and the background or separate the layers. GitHub starring and the official Buy Me a Coffee button are visible in the header. Run `scripts/showcase_details_acceptance.py` to check these controls and mobile layouts.
+
 Build a portable static version with `python scripts/build_showcase.py`. Serve the generated `site/` folder on a static host. It contains only the landing page, original illustrative animation, and interface assets—no saved projects or reference media. Away from the local server, the page labels its animation as an illustration and links visitors to setup instructions. Test the local landing page with `scripts/showcase_acceptance.py`.
 
 ## Checks

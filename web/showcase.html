@@ -5,13 +5,14 @@
 <title>MotionClone — From reference to editable motion</title>
 <meta name="description" content="Rebuild reference videos as editable motion projects. Explore the demo, compare the result, and get MotionClone on GitHub.">
 <link rel="icon" href="./assets/motionclone-icon-color.svg">
-<link rel="stylesheet" href="./showcase.css?v=8494d62b0af3">
-<script src="./showcase.js?v=a76d35f4e7a6" defer></script><script src="./previews.js?v=c1fd82d2ef8b" defer></script>
+<link rel="stylesheet" href="./showcase.css?v=d5fc152adb9e">
+<script src="./showcase.js?v=5a6fe76632b5" defer></script><script src="./previews.js?v=c1fd82d2ef8b" defer></script>
 </head>
 <body>
 <header class="site-header">
   <a class="brand" href="#" aria-label="MotionClone home"><img src="./assets/motionclone-icon-color.svg" width="32" height="32" alt="">MotionClone</a>
-  <nav aria-label="Main navigation"><a href="#demo">Demo</a><a href="#how-it-works">How it works</a><a href="https://github.com/blixvip/MotionClone" target="_blank" rel="noopener">GitHub <span data-icon="external"></span></a></nav>
+  <nav aria-label="Main navigation"><a href="#demo">Demo</a><a href="#how-it-works">How it works</a></nav>
+  <div class="header-support"><a class="header-star" href="https://github.com/blixvip/MotionClone" target="_blank" rel="noopener" data-icon="star">Star on GitHub</a><a class="header-coffee" href="https://buymeacoffee.com/blix" target="_blank" rel="noopener"><img src="./assets/buymeacoffee-yellow.png" width="145" height="41" alt="Buy me a coffee"></a></div>
   <a class="workspace-link" href="/?workspace=1" id="open-workspace">Open workspace <span data-icon="arrow-right"></span></a>
 </header>
 <main>
@@ -29,6 +30,7 @@
     <div class="demo-caption"><span><span class="live-dot"></span>THE SIDE-BY-SIDE TEST</span><span>Same moment. Two versions.</span></div>
     <div id="demo" class="demo-window">
       <div class="window-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="demo-title">reference → rebuild</span><span data-icon="compare"></span></div>
+      <div class="demo-tools"><div class="view-switch" aria-label="Comparison view"><button id="view-pair" type="button" aria-pressed="true" data-icon="compare">Side by side</button><button id="view-wipe" type="button" aria-pressed="false" data-icon="scan">Wipe compare</button></div><label class="wipe-control" id="wipe-control" hidden>Reveal<input id="wipe-position" type="range" min="5" max="95" value="50" aria-label="Comparison divider position"></label><label class="speed-control" id="speed-control" hidden><span class="sr-only">Playback speed</span><select id="demo-speed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1× speed</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><button class="demo-expand" id="demo-expand" type="button" data-icon="external" aria-label="View demo fullscreen" title="Fullscreen"></button></div>
       <div id="demo-player" class="demo-player">
         <div class="illustrative-demo" aria-label="Illustration of reference and editable motion layers">
           <div class="sample-pane"><span class="sample-label">REFERENCE</span><div class="sample-art"><span class="sample-ring"></span><span class="sample-orb"></span><strong>Make<br>your move.</strong><span class="sample-line"></span></div></div>
@@ -40,6 +42,8 @@
     </div>
     <p class="demo-footnote" id="demo-footnote">Reconstruction is approximate. Compare the result and fine-tune the details.</p>
   </section>
+
+  <section class="layer-lab" id="layers" aria-labelledby="layer-title"><div class="layer-lab-copy"><p class="kicker">A VIDEO IS THE START. LAYERS ARE THE POSSIBILITIES.</p><h2 id="layer-title">Go beyond<br>the final frame.</h2><p>Text. Shapes. Backgrounds. See why an editable project gives you room to make it your own.</p><div class="layer-toggles" aria-label="Illustration layers"><button type="button" data-layer="type" aria-pressed="true" data-icon="tag">Typography<span class="layer-check" aria-hidden="true">✓</span></button><button type="button" data-layer="shape" aria-pressed="true" data-icon="layers">Shapes<span class="layer-check" aria-hidden="true">✓</span></button><button type="button" data-layer="grid" aria-pressed="true" data-icon="scan">Background<span class="layer-check" aria-hidden="true">✓</span></button></div><button type="button" id="explode-layers" class="explode-button" aria-pressed="false" data-icon="layers">Separate the layers<span data-icon="arrow-right"></span></button><p class="lab-disclosure">Interactive illustration. Your exported project opens in HyperFrames.</p></div><div class="layer-stage" aria-label="Editable scene illustration"><div class="stage-topline"><span><span class="live-dot"></span>SCENE PLAYGROUND</span><span id="layer-count" aria-live="polite">3 layers visible</span></div><div class="layer-scene"><div class="lab-plane lab-grid" data-plane="grid"><span class="plane-label">Background</span></div><div class="lab-plane lab-shape" data-plane="shape"><span class="lab-sphere"></span><span class="lab-orbit"></span><span class="plane-label">Shapes</span></div><div class="lab-plane lab-type" data-plane="type"><strong>Make<br>your move<span>.</span></strong><span class="type-underline"></span><span class="plane-label">Typography</span></div></div><div class="stage-bottomline"><span data-icon="info">Try toggling a layer</span><span>HTML · CSS · SVG</span></div></div></section>
 
   <section class="process-section" id="how-it-works" aria-labelledby="process-title">
     <div class="section-intro"><p class="kicker">A REFERENCE IS JUST THE START</p><h2 id="process-title">Less starting over.<br>More making it yours.</h2><p>A simple path from “I like that” to a motion project you can open, edit, and export.</p></div>
