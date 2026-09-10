@@ -1,0 +1,9 @@
+{
+  "name": "motionclone-hyperframes",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "gsap": "3.14.2",
+    "hyperframes": "0.8.33"
+  }
+}
