@@ -12,6 +12,7 @@ MotionClone is a local Windows app for creators who want to rebuild a video's te
 - Authors independent text, CSS, and SVG layers; checks previews and attempts bounded visual corrections.
 - Saves completed scenes so retries can resume, and reuses unchanged verified exports.
 - Compares every rendered frame and offers synchronized original/rebuilt playback.
+- Plays original and rebuilt videos side by side in the home screen and library, with shared pause, seeking, and optional original audio. Visible previews autoplay muted; reduced-motion settings disable autoplay.
 - Exports an MP4 and an editable HyperFrames project. Saved videos support search, favorites, collections, and archiving.
 
 **Reconstruction is approximate.** Complex footage, small text, photographs, unknown fonts, and 3D can differ significantly. Processing time depends on the video and model; there is no universal fidelity or runtime guarantee. A successful export is not proof of a perfect visual match.
@@ -65,6 +66,8 @@ After setup, with the local app running:
 ```
 
 The browser checks use isolated fixtures and do not start real AI work. To inspect an existing completed HyperFrames rebuild, use `scripts/hyperframes_acceptance.py --project YOUR_PROJECT_ID`. `scripts/generalized_acceptance.py --run-ai` is an optional real-model benchmark that uses your connected ChatGPT plan.
+
+With at least one completed source/rebuild pair saved, `scripts/live_preview_acceptance.py` checks real synchronized playback, seeking, mobile layouts, reduced motion, and the WebGL fallback without changing the project. The localized light effect uses original GLSL with a static CSS fallback and stops drawing offscreen.
 
 ## Assets and credits
 

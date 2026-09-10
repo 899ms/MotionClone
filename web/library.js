@@ -99,7 +99,10 @@ function card(job) {
   const article=node('article','motion-card');
   const preview=node('div','card-preview');
   const url=job.files['output.mp4']||job.files['source.mp4'];
-  if(url) {
+  const comparable=!!job.files['source.mp4']&&!!job.files['output.mp4'];
+  if(comparable) {
+    article.classList.add('has-comparison');preview.append(comparisonPreview(job));
+  } else if(url) {
     const video=document.createElement('video');
     video.src=url;video.preload='none';video.muted=true;video.loop=true;video.playsInline=true;video.controls=false;
     video.poster=job.files['thumbnail.jpg']||`/media/${job.id}/thumbnail.jpg`;
@@ -112,7 +115,7 @@ function card(job) {
     preview.append(video);
     preview.append(play);
   } else {const placeholder=node('div','preview-placeholder',job.status==='error'?'Reference unavailable':job.status==='complete'||job.status==='draft'?'No preview yet':'Preparing reference…');placeholder.prepend(icon(job.status==='error'?'error':'video'));preview.append(placeholder);}
-  const badge=node('span',`card-badge ${job.status}`,statusLabels[job.status]||job.status);badge.prepend(icon(job.status==='complete'?'check-circle':['error','interrupted'].includes(job.status)?'warning':['running','queued'].includes(job.status)?'loader':'file'));preview.append(badge);
+  const badge=node('span',`card-badge ${job.status}`,statusLabels[job.status]||job.status);badge.prepend(icon(job.status==='complete'?'check-circle':['error','interrupted'].includes(job.status)?'warning':['running','queued'].includes(job.status)?'loader':'file'));if(!comparable)preview.append(badge);
   article.append(preview);
   if(['running','queued'].includes(job.status)) {
     const bar=node('div','card-progress'),fill=node('span');
