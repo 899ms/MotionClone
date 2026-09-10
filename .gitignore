@@ -15,6 +15,7 @@ remotion/out/
 *.zip
 .coverage
 htmlcov/
+site/
 remotion/public/project.json
 BUILD-PLAN.md
 LIBRARY-VALIDATION.md

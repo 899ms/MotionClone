@@ -6,7 +6,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(channel='chrome')
     page=browser.new_page(viewport={'width':1440,'height':1000})
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-    page.goto('http://127.0.0.1:4319/',wait_until='domcontentloaded')
+    page.goto('http://127.0.0.1:4319/?workspace=1',wait_until='domcontentloaded')
     pair=page.locator('#recent-grid .live-comparison').first
     expect(pair).to_be_visible(timeout=15000)
     pair.scroll_into_view_if_needed()
@@ -52,7 +52,7 @@ with sync_playwright() as p:
     fallback=browser.new_page(viewport={'width':1440,'height':1000})
     fallback.add_init_script("""const getContext=HTMLCanvasElement.prototype.getContext;
       HTMLCanvasElement.prototype.getContext=function(type,...args){return type==='webgl'?null:getContext.call(this,type,...args)};""")
-    fallback.goto('http://127.0.0.1:4319/',wait_until='domcontentloaded')
+    fallback.goto('http://127.0.0.1:4319/?workspace=1',wait_until='domcontentloaded')
     expect(fallback.locator('#recent-grid .live-comparison').first).to_be_visible()
     expect(fallback.locator('.studio-light')).to_have_count(0)
     fallback.wait_for_function("() => [...document.querySelectorAll('#recent-grid video')].length===2 && [...document.querySelectorAll('#recent-grid video')].every(v=>!v.paused && v.currentTime>.3)",timeout=15000)

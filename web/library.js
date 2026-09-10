@@ -52,7 +52,7 @@ async function openProject(id) {
     const job=await api(`/api/jobs/${id}`);
     editing=false;lastPlan='';fillBrief(job.brief);fillDetails(job);show(job);
     localStorage.setItem('frameforge-project',job.id);editorPage();error('');
-    window.history.replaceState({},'',`/?project=${job.id}`);
+    window.history.replaceState({},'',`/?workspace=1&project=${job.id}`);
   } catch(e) {error(e.message);}
 }
 const originalShow = show;
@@ -221,14 +221,13 @@ async function patchProject(id,patch) {
 $('back-library').addEventListener('click',libraryPage);
 $('open-library').addEventListener('click',libraryPage);
 $('view-all').addEventListener('click',libraryPage);
-document.querySelector('.wordmark').addEventListener('click',event=>{event.preventDefault();$('new-project').click();});
 for(const id of ['add-reference','empty-add'])$(id).addEventListener('click',()=>{$('new-project').click();});
 $('new-project').addEventListener('click',()=>{
   if(submitting)return;
   if(current&&['running','queued'].includes(current.status))return;
   $('library-details').hidden=true;$('library-details').open=false;
   $('project-options').open=false;
-  window.history.replaceState({},'','/');
+  window.history.replaceState({},'','/?workspace=1');
   $('editor-title').textContent='Rebuild a video.';$('editor-kind').textContent='NEW REFERENCE';editorPage();
 });
 $('library-search').addEventListener('input',drawLibrary);

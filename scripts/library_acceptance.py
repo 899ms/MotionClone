@@ -34,7 +34,7 @@ try:
         browser=p.chromium.launch(channel='chrome')
         page=browser.new_page(viewport={'width':1440,'height':1000})
         errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-        page.goto('http://127.0.0.1:4321',wait_until='networkidle')
+        page.goto('http://127.0.0.1:4321/?workspace=1',wait_until='networkidle')
         expect(page.locator('#url')).to_be_visible()
         expect(page.locator('#project-options')).not_to_have_attribute('open', '')
         page.locator('#open-library').click()

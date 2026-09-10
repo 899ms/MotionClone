@@ -11,7 +11,7 @@ import zipfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image, UnidentifiedImageError
 from .ai import analyze, auth_status
@@ -95,7 +95,11 @@ async def local_boundary(request: Request, call_next):
 
 
 @app.get('/')
-def index():return FileResponse(ROOT/'web/index.html')
+def index(request: Request):
+    if 'workspace' in request.query_params or 'project' in request.query_params:
+        return FileResponse(ROOT/'web/index.html')
+    page=(ROOT/'web/showcase.html').read_text(encoding='utf-8')
+    return HTMLResponse(page.replace('href="./','href="/static/').replace('src="./','src="/static/'))
 
 
 @app.get('/api/status')

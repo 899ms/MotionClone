@@ -8,7 +8,7 @@ with sync_playwright() as p:
         page = browser.new_page(viewport={'width':width,'height':1000})
         errors=[]
         page.on('pageerror', lambda e: errors.append(str(e)))
-        page.goto('http://127.0.0.1:4319', wait_until='domcontentloaded')
+        page.goto('http://127.0.0.1:4319/?workspace=1', wait_until='domcontentloaded')
         page.wait_for_function("() => document.getElementById('recent-loading').hidden")
         page.screenshot(path=str(out/f'ui-{width}.png'),full_page=True)
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), 'Horizontal overflow'

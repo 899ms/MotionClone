@@ -19,7 +19,7 @@ with sync_playwright() as p:
         elif path.endswith('/cancel'):state['cancels']+=1;r.fulfill(json={'ok':True})
         else:r.fulfill(json=job)
     page.route('**/api/**',route)
-    page.goto('http://127.0.0.1:4319/',wait_until='networkidle')
+    page.goto('http://127.0.0.1:4319/?workspace=1',wait_until='networkidle')
     expect(page.locator('#source-summary')).to_contain_text(job['url'])
     expect(page.locator('#create-form')).to_be_hidden()
     expect(page.locator('#viewer-tabs')).to_be_hidden()
@@ -32,7 +32,7 @@ with sync_playwright() as p:
     job.update(status='cancelled',stage='Cancelled. Your project is saved.')
     page.evaluate('poll()');expect(page.locator('#job-error-title')).to_have_text('Rebuild cancelled')
     page.locator('#choose-video').click();expect(page.locator('#create')).to_be_enabled()
-    assert '?project=' not in page.url
+    assert 'project=' not in page.url
     state['chatgpt']=False;page.locator('#refresh-auth').click()
     expect(page.locator('#connection')).to_have_text('Sign in needed')
     expect(page.locator('#auth-help')).to_be_visible()

@@ -2,7 +2,7 @@
 <p align="center">Turn a reference video into an editable motion project.</p>
 <p align="center"><a href="https://buymeacoffee.com/blix"><img src="web/assets/buymeacoffee-yellow.png" width="170" alt="Buy me a coffee"></a></p>
 
-![MotionClone: paste a video link, rebuild, and review](docs/interface.png)
+![MotionClone project showcase](docs/showcase.png)
 
 MotionClone is a local Windows app for creators who want to rebuild a video's text, shapes, artwork, and animation as editable HyperFrames layers. Paste a public X / Twitter, YouTube, Vimeo, or direct video URL, or upload a file. No branding input is required.
 
@@ -34,7 +34,7 @@ Codex is separately installed. This app uses its existing login and does not req
 
 ## Use
 
-1. Paste a video URL or upload a file. Optionally disable original audio.
+1. Select **Open workspace** from the demo homepage. Paste a video URL or upload a file. Optionally disable original audio.
 2. Select **Rebuild video**. Completed scenes are saved; the progress view shows the current stage and elapsed time.
 3. Review **Rebuilt**, **Reference**, and **Compare**. Remaining visual differences are labeled.
 4. Download the MP4 or **Editable project**. Full archives and verification details are under **Export details**.
@@ -54,6 +54,12 @@ New jobs use HyperFrames. Legacy projects retain their original exporters and ar
 Projects are stored in `data/` on your computer. Selected reference frames go to ChatGPT for analysis. Source downloads contact the relevant video service. Interface icons and support-button artwork load locally; the Buy Me a Coffee link opens its website only when clicked.
 
 The repository excludes user projects, media, logs, environment files, dependencies, and generated test outputs. Existing internal storage/authentication identifiers remain compatible with older Frameforge installations.
+
+## Project showcase
+
+The homepage is a GitHub project showcase with a live local comparison, a short walkthrough, setup instructions, and support links. The application remains at `/?workspace=1`; existing project links still work.
+
+Build a portable static version with `python scripts/build_showcase.py`. Serve the generated `site/` folder on a static host. It contains only the landing page, original illustrative animation, and interface assets—no saved projects or reference media. Away from the local server, the page labels its animation as an illustration and links visitors to setup instructions. Test the local landing page with `scripts/showcase_acceptance.py`.
 
 ## Checks
 

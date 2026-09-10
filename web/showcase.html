@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MotionClone — From reference to editable motion</title>
+<meta name="description" content="Rebuild reference videos as editable motion projects. Explore the demo, compare the result, and get MotionClone on GitHub.">
+<link rel="icon" href="./assets/motionclone-icon-color.svg">
+<link rel="stylesheet" href="./showcase.css?v=8494d62b0af3">
+<script src="./showcase.js?v=a76d35f4e7a6" defer></script><script src="./previews.js?v=c1fd82d2ef8b" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="#" aria-label="MotionClone home"><img src="./assets/motionclone-icon-color.svg" width="32" height="32" alt="">MotionClone</a>
+  <nav aria-label="Main navigation"><a href="#demo">Demo</a><a href="#how-it-works">How it works</a><a href="https://github.com/blixvip/MotionClone" target="_blank" rel="noopener">GitHub <span data-icon="external"></span></a></nav>
+  <a class="workspace-link" href="/?workspace=1" id="open-workspace">Open workspace <span data-icon="arrow-right"></span></a>
+</header>
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <a class="project-pill" href="https://github.com/blixvip/MotionClone"><span class="pill-dot"></span>A little project for big motion ideas<span data-icon="arrow-right"></span></a>
+    <h1 id="hero-title">Love the motion?<br><span class="hero-rebuild">Rebuild it.</span><span class="cursor-mark" aria-hidden="true"></span></h1>
+    <p class="hero-copy">Turn a video reference into layers you can edit.<br>Keep the idea moving. Make the next version yours.</p>
+    <div class="hero-actions"><a class="button main-button" href="https://github.com/blixvip/MotionClone" target="_blank" rel="noopener"><span data-icon="download"></span>Get it on GitHub<span data-icon="arrow-right"></span></a><a class="button demo-button" href="#demo"><span data-icon="play"></span>Watch the demo</a></div>
+    <p class="hero-note">Runs locally on Windows <span>·</span> Built with HyperFrames</p>
+    <div class="orbit-mark orbit-one" aria-hidden="true"><svg viewBox="0 0 80 80"><rect x="13" y="13" width="44" height="44" rx="9"/><rect x="25" y="25" width="44" height="44" rx="9"/><path d="m42 35 15 12-15 12Z"/></svg></div>
+    <div class="orbit-mark orbit-two" aria-hidden="true"><svg viewBox="0 0 80 80"><path d="m40 12 28 15-28 15L12 27Zm-28 29 28 15 28-15M12 56l28 15 28-15"/></svg></div>
+  </section>
+
+  <section id="recent-section" class="demo-section" aria-labelledby="demo-title">
+    <div class="demo-caption"><span><span class="live-dot"></span>THE SIDE-BY-SIDE TEST</span><span>Same moment. Two versions.</span></div>
+    <div id="demo" class="demo-window">
+      <div class="window-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="demo-title">reference → rebuild</span><span data-icon="compare"></span></div>
+      <div id="demo-player" class="demo-player">
+        <div class="illustrative-demo" aria-label="Illustration of reference and editable motion layers">
+          <div class="sample-pane"><span class="sample-label">REFERENCE</span><div class="sample-art"><span class="sample-ring"></span><span class="sample-orb"></span><strong>Make<br>your move.</strong><span class="sample-line"></span></div></div>
+          <div class="sample-pane sample-rebuild"><span class="sample-label">EDITABLE LAYERS</span><div class="sample-art"><span class="sample-ring"></span><span class="sample-orb"></span><strong>Make<br>your move.</strong><span class="sample-line"></span></div></div>
+          <p class="sample-note">Animated illustration of editable layers. Run locally to compare your own videos.</p>
+        </div>
+      </div>
+      <div class="demo-bottom"><span id="demo-description"><span data-icon="layers"></span>From a flat video to an editable project.</span><span class="demo-tag" id="demo-tag">ILLUSTRATIVE DEMO</span></div>
+    </div>
+    <p class="demo-footnote" id="demo-footnote">Reconstruction is approximate. Compare the result and fine-tune the details.</p>
+  </section>
+
+  <section class="process-section" id="how-it-works" aria-labelledby="process-title">
+    <div class="section-intro"><p class="kicker">A REFERENCE IS JUST THE START</p><h2 id="process-title">Less starting over.<br>More making it yours.</h2><p>A simple path from “I like that” to a motion project you can open, edit, and export.</p></div>
+    <div class="process-grid">
+      <article><div class="step-art"><span class="step-icon" data-icon="link"></span><span class="step-number">01</span></div><h3>Bring the reference.</h3><p>Paste a public video link or upload a clip. No brand kit. No complicated brief.</p><span class="step-detail">X / Twitter · YouTube · Video files</span></article>
+      <article><div class="step-art layer-art"><span class="step-icon" data-icon="layers"></span><span class="step-number">02</span></div><h3>Rebuild the motion.</h3><p>MotionClone scans the frames and authors independent text, shapes, artwork, and animation.</p><span class="step-detail">Frame analysis → Editable layers</span></article>
+      <article><div class="step-art export-art"><span class="step-icon" data-icon="download"></span><span class="step-number">03</span></div><h3>Take it from here.</h3><p>Compare both versions, download the video, and keep the HyperFrames project for your next edit.</p><span class="step-detail">MP4 + Editable project</span></article>
+    </div>
+  </section>
+
+  <section class="get-section" id="get-started" aria-labelledby="get-title">
+    <div><p class="kicker">ON GITHUB. ON YOUR MACHINE.</p><h2 id="get-title">Your next motion<br>experiment starts here.</h2><p>Get the code, run it locally, and see what you can rebuild.</p><a class="button main-button" href="https://github.com/blixvip/MotionClone#run-locally" target="_blank" rel="noopener">Get started<span data-icon="arrow-right"></span></a></div>
+    <div class="install-card"><div class="install-header"><span data-icon="folder"></span>Quick start <span>PowerShell</span></div><pre><code id="install-command">git clone https://github.com/blixvip/MotionClone.git
+cd MotionClone
+codex login
+.\start.ps1</code></pre><div class="install-bottom"><span>Windows · Python · Node.js · FFmpeg</span><button id="copy-command" type="button" data-icon="copy">Copy</button></div><p class="copy-notice" id="copy-notice" role="status"></p></div>
+  </section>
+  <section class="faq-section" aria-label="A few useful details"><details><summary>Is every rebuild a perfect match?<span data-icon="plus"></span></summary><p>No. Complex footage, 3D, tiny text, and unfamiliar fonts can differ. MotionClone compares the render with the reference so you can review what still needs work.</p></details><details><summary>What do I need to run it?<span data-icon="plus"></span></summary><p>Windows, Python 3.11+, Node.js 22+, FFmpeg, Chrome, and the official Codex CLI signed in with ChatGPT. The GitHub README covers setup.</p></details><details><summary>Where do my videos go?<span data-icon="plus"></span></summary><p>Projects are saved on your computer. Selected reference frames are sent to ChatGPT for scene analysis. This demo page does not accept uploads.</p></details></section>
+</main>
+<footer class="site-footer"><a class="brand" href="#"><img src="./assets/motionclone-icon-color.svg" width="28" height="28" alt="">MotionClone</a><span>Built by <a href="https://buymeacoffee.com/blix" target="_blank" rel="noopener">blix</a>. Made for making.</span><div><a href="https://github.com/blixvip/MotionClone" target="_blank" rel="noopener" class="footer-github" data-icon="star">Star on GitHub</a><a href="https://buymeacoffee.com/blix" target="_blank" rel="noopener" class="coffee-link"><img src="./assets/buymeacoffee-yellow.png" width="136" height="38" alt="Buy me a coffee"></a></div></footer>
+</body>
+</html>

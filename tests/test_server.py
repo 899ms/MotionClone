@@ -11,6 +11,16 @@ def test_local_app_has_security_headers():
     assert "frame-ancestors 'none'" in r.headers['content-security-policy']
 
 
+def test_showcase_and_workspace_routes_remain_separate():
+    showcase=client.get('/')
+    assert 'hero-title' in showcase.text
+    assert '/static/showcase.css' in showcase.text
+    workspace=client.get('/?workspace=1')
+    assert 'id="create-form"' in workspace.text
+    assert 'hero-title' not in workspace.text
+    assert 'id="create-form"' in client.get('/?project=aaaaaaaaaaaa').text
+
+
 def test_mutation_requires_local_token():
     assert client.post('/api/jobs').status_code==403
 
