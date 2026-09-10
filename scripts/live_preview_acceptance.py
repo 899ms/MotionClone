@@ -25,6 +25,7 @@ with sync_playwright() as p:
     pair.locator('.compare-toggle').click()
     page.wait_for_timeout(700)
     assert pair.locator('video').evaluate_all('(vs)=>vs.every(v=>!v.paused && v.currentTime>20.3)')
+    assert abs(float(pair.locator('input').input_value())-pair.locator('video').first.evaluate('(v)=>v.currentTime'))<.25
     page.screenshot(path=str(OUT/'home-1440.png'),full_page=True)
     page.locator('#open-library').click()
     expect(page.locator('#library-grid .live-comparison')).to_be_visible()

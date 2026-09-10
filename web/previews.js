@@ -90,7 +90,7 @@ function updateComparisons(now) {
       const [original, rebuilt] = player.videos;
       if (Math.abs(original.currentTime - rebuilt.currentTime) > .12 && !rebuilt.seeking) rebuilt.currentTime = original.currentTime;
       const seek = player.root.querySelector('input');
-      if (document.activeElement !== seek) seek.value = original.currentTime;
+      seek.value = original.currentTime;
       player.root.querySelector('.compare-time').textContent = `${duration(original.currentTime)} / ${duration(Number(seek.max))}`;
     }
   }
