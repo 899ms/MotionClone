@@ -37,7 +37,7 @@ function editorState() {
   $('import-fields').disabled=busy||submitting;
   setControl('create',busy?'Rebuilding…':submitting?'Starting…':'Rebuild video',busy||submitting?'loader':'layers');
   $('create-form').setAttribute('aria-busy',String(busy||submitting));
-  $('editor-description').textContent=!current?'Paste a reference. Get an editable motion project.':busy?'Rebuilding independent layers. Progress is saved automatically.':current.brief.mode==='hyperframes'?'Review your independent HyperFrames rebuild against the reference.':current.brief.mode==='faithful'?'This export reuses the original video. Its text, artwork, and animation were not rebuilt.':'Preview, edit, and download your video.';
+  $('editor-description').textContent=!current?'Paste a video link or upload a file to get started.':busy?'Rebuilding your video. Your progress is saved.':current.brief.mode==='hyperframes'?'Watch your rebuild, compare it, then download.':current.brief.mode==='faithful'?'This export reuses the original video. Its text, artwork, and animation were not rebuilt.':'Preview, edit, and download your video.';
 }
 function fillDetails(job) {
   $('url').value=job.url||'';
@@ -99,23 +99,18 @@ function card(job) {
   const article=node('article','motion-card');
   const preview=node('div','card-preview');
   const url=job.files['output.mp4']||job.files['source.mp4'];
-  const comparable=!!job.files['source.mp4']&&!!job.files['output.mp4'];
-  if(comparable) {
-    article.classList.add('has-comparison');preview.append(comparisonPreview(job));
-  } else if(url) {
-    const video=document.createElement('video');
-    video.src=url;video.preload='none';video.muted=true;video.loop=true;video.playsInline=true;video.controls=false;
-    video.poster=job.files['thumbnail.jpg']||`/media/${job.id}/thumbnail.jpg`;
-    video.setAttribute('aria-label',`Preview ${job.name}`);
-    const play=node('button','card-play');setControl(play,'Preview','play');
-    play.setAttribute('aria-label',`Play preview of ${job.name}`);
-    play.addEventListener('click',()=>{video.controls=true;play.hidden=true;video.play().catch(()=>{play.hidden=false;});});
-    preview.addEventListener('mouseenter',()=>{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){video.controls=true;play.hidden=true;video.play().catch(()=>{play.hidden=false;});}});
-    preview.addEventListener('mouseleave',()=>{video.pause();video.controls=false;play.hidden=false;});
-    preview.append(video);
-    preview.append(play);
+  if(url) {
+    const thumbnail=node('button','card-thumbnail');
+    thumbnail.type='button';thumbnail.setAttribute('aria-label',`Open ${job.name}`);
+    const image=document.createElement('img');
+    image.src=job.files['thumbnail.jpg']||`/media/${job.id}/thumbnail.jpg`;
+    image.alt='';image.loading='lazy';
+    image.addEventListener('error',()=>{image.remove();thumbnail.classList.add('thumbnail-missing');},{once:true});
+    const play=node('span','thumbnail-open');play.append(icon('play'));
+    thumbnail.append(image,play);thumbnail.addEventListener('click',()=>openProject(job.id));
+    preview.append(thumbnail);
   } else {const placeholder=node('div','preview-placeholder',job.status==='error'?'Reference unavailable':job.status==='complete'||job.status==='draft'?'No preview yet':'Preparing reference…');placeholder.prepend(icon(job.status==='error'?'error':'video'));preview.append(placeholder);}
-  const badge=node('span',`card-badge ${job.status}`,statusLabels[job.status]||job.status);badge.prepend(icon(job.status==='complete'?'check-circle':['error','interrupted'].includes(job.status)?'warning':['running','queued'].includes(job.status)?'loader':'file'));if(!comparable)preview.append(badge);
+  const badge=node('span',`card-badge ${job.status}`,statusLabels[job.status]||job.status);badge.prepend(icon(job.status==='complete'?'check-circle':['error','interrupted'].includes(job.status)?'warning':['running','queued'].includes(job.status)?'loader':'file'));preview.append(badge);
   article.append(preview);
   if(['running','queued'].includes(job.status)) {
     const bar=node('div','card-progress'),fill=node('span');
@@ -273,7 +268,7 @@ function renderScreen(){
     setControl('job-state',busy?'IN PROGRESS':'',stageIcon);
     if(complete){
       const rebuilt=job.brief.mode==='hyperframes',matched=!!job.verification?.near_perfect;
-      $('finished-title').textContent=rebuilt?(matched?'Your rebuilt video is ready.':'Export ready — review the match'):job.brief.mode==='faithful'?'Original video export.':'Your export is ready.';
+      $('finished-title').textContent=rebuilt?(matched?'Your rebuilt video is ready.':'Your video is ready.'):job.brief.mode==='faithful'?'Original video export.':'Your export is ready.';
       $('finished-summary').textContent=rebuilt?(matched?'Compare the result, then download your video or editable project.':'Visual differences remain. Compare before using the result.'):job.brief.mode==='faithful'?'This export retains the original video; its visuals were not reconstructed.':'Download your video or open its project.';
       if(!$('verification-label').querySelector('svg'))$('verification-label').prepend(icon(rebuilt&&!matched?'warning':'check-circle'));
     }

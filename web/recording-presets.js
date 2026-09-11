@@ -24,8 +24,8 @@
   let active=false,recording=false;
   const panel=document.createElement('section');panel.id='recording-options';panel.hidden=true;
   panel.setAttribute('aria-label','Recording view styles');
-  panel.innerHTML=`<div class="recording-heading"><div><h3>One rebuild. Six ways to show it.</h3><p>Choose a look, then frame it for your feed.</p></div><span class="recording-badge">RECORDING STUDIO</span></div>
-    <div class="recording-presets" role="group" aria-label="Recording look">${presets.map(p=>`<button type="button" class="recording-preset" data-look="${p.id}" aria-pressed="false"><span class="preset-art" aria-hidden="true"><i></i><i></i><i></i></span><strong>${p.name}</strong><small>${p.detail}</small><span class="preset-check" aria-hidden="true">✓</span></button>`).join('')}</div>
+  panel.innerHTML=`<details id="recording-style-options"><summary>Choose a style <span id="recording-style-name"></span></summary>
+    <div class="recording-presets" role="group" aria-label="Recording look">${presets.map(p=>`<button type="button" class="recording-preset" data-look="${p.id}" aria-pressed="false"><span class="preset-art" aria-hidden="true"><i></i><i></i><i></i></span><strong>${p.name}</strong><small>${p.detail}</small><span class="preset-check" aria-hidden="true">✓</span></button>`).join('')}</div></details>
     <div class="recording-settings"><label>Format<select id="recording-format"><option value="landscape">16:9 · Landscape</option><option value="portrait">9:16 · Short form</option><option value="square">1:1 · Square</option></select></label><label>Arrangement<select id="recording-layout"><option value="split">Side by side</option><option value="stack">Stacked comparison</option><option value="spotlight">Rebuild spotlight</option></select></label><div class="recording-link"><button id="copy-recording-link" type="button" class="secondary">Copy local view link</button><span id="recording-link-status" role="status"></span></div></div>
     <p id="recording-size" class="recording-size"></p><label id="recording-link-fallback" hidden>Copy this link<input id="recording-link-value" readonly></label>`;
   stage.before(panel);
@@ -49,7 +49,8 @@
     stage.style.setProperty('--capture-width',`${width}px`);stage.style.setProperty('--capture-height',`${height}px`);
     $('recording-format').value=format;$('recording-layout').value=layout;
     for(const button of panel.querySelectorAll('[data-look]'))button.setAttribute('aria-pressed',String(button.dataset.look===preset.id));
-    $('recording-size').textContent=`${width} × ${height} canvas · Both videos stay uncropped. Branding and credits included in every look.`;
+    $('recording-style-name').textContent=preset.name;
+    $('recording-size').textContent=`${width} × ${height} · Full video with audio and credits`;
     $('recording-link-status').textContent='';$('recording-link-fallback').hidden=true;
     try{localStorage.setItem('motionclone-recording',JSON.stringify(state()));}catch{}
     updateURL();fit();

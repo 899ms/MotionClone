@@ -47,7 +47,7 @@ with sync_playwright() as p:
     page.route('**/api/**', api_route)
     page.route('**/fixture.mp4', lambda route: route.fulfill(path=str(media), content_type='video/mp4'))
     page.goto('http://127.0.0.1:4319/?workspace=1', wait_until='networkidle')
-    expect(page.get_by_label('Paste X / Twitter video link', exact=True)).to_be_visible()
+    expect(page.get_by_label('Video link', exact=True)).to_be_visible()
     page.locator('#url').focus()
     page.keyboard.press('Tab')
     expect(page.locator('#create')).to_be_focused()

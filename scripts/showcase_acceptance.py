@@ -6,7 +6,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(channel='chrome')
     page=browser.new_page(viewport={'width':1440,'height':1000})
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-    page.goto('http://127.0.0.1:4319/',wait_until='domcontentloaded')
+    page.goto('http://127.0.0.1:4319/?demo=1',wait_until='domcontentloaded')
     expect(page.locator('#hero-title')).to_have_text('Love the motion?Rebuild it.')
     expect(page.locator('#demo-player .live-comparison')).to_be_visible(timeout=12000)
     assert page.locator('#create-form').count()==0
@@ -26,7 +26,7 @@ with sync_playwright() as p:
     expect(page).to_have_url('http://127.0.0.1:4319/?workspace=1')
     # Offline/static hosting has an explicit illustrative preview, never broken players.
     page.route('**/api/library',lambda route:route.abort())
-    page.goto('http://127.0.0.1:4319/',wait_until='domcontentloaded')
+    page.goto('http://127.0.0.1:4319/?demo=1',wait_until='domcontentloaded')
     expect(page.locator('.illustrative-demo')).to_be_visible()
     expect(page.locator('.sample-note')).to_contain_text('illustration')
     page.screenshot(path=str(OUT/'standalone.png'),full_page=True)

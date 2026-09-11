@@ -6,7 +6,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(channel='chrome')
     page=browser.new_page(viewport={'width':1440,'height':1000})
     errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-    page.goto('http://127.0.0.1:4319/',wait_until='domcontentloaded')
+    page.goto('http://127.0.0.1:4319/?demo=1',wait_until='domcontentloaded')
     expect(page.locator('#demo-player video')).to_have_count(2,timeout=12000)
     expect(page.locator('.header-star')).to_have_attribute('href','https://github.com/blixvip/MotionClone')
     expect(page.locator('.header-coffee')).to_have_attribute('href','https://buymeacoffee.com/blix')
@@ -44,7 +44,7 @@ with sync_playwright() as p:
     page.locator('#explode-layers').click()
     assert page.locator('.lab-plane').first.evaluate('(e)=>getComputedStyle(e).transitionDuration')=='0s'
     page.route('**/api/library',lambda r:r.abort())
-    page.goto('http://127.0.0.1:4319/',wait_until='domcontentloaded')
+    page.goto('http://127.0.0.1:4319/?demo=1',wait_until='domcontentloaded')
     page.locator('#view-wipe').click()
     expect(page.locator('.illustrative-demo')).to_be_visible()
     page.locator('[data-layer="shape"]').click()

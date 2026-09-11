@@ -27,6 +27,7 @@ with sync_playwright() as pw:
     page.on('pageerror', lambda error: errors.append(str(error)))
     page.goto(base + '&look=studio')
     expect(page.locator('#recording-options')).to_be_visible()
+    page.locator('#recording-style-options > summary').click()
     page.locator('#recording-options').screenshot(path=str(out / 'picker.png'))
     original_sources = page.locator('#players video').evaluate_all('(els)=>els.map(v=>v.src)')
 

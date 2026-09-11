@@ -1,4 +1,8 @@
 const assetBase = new URL('.', document.currentScript.src);
+// Local visitors already installed the app: take them directly to their workspace.
+if (assetBase.pathname === '/static/' && ['127.0.0.1', 'localhost'].includes(location.hostname) && !new URLSearchParams(location.search).has('demo')) {
+  location.replace('/?workspace=1');
+}
 function icon(name) {
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','icon');svg.setAttribute('aria-hidden','true');
   const use=document.createElementNS(svg.namespaceURI,'use');use.setAttribute('href',new URL('assets/icons.svg#'+name,assetBase));svg.append(use);return svg;
