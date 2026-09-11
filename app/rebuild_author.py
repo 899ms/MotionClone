@@ -122,9 +122,9 @@ Do not claim 1:1 just because all layers exist; comparison runs after rendering.
 '''
 
 
-def author(folder,meta,sheets,cancel,progress):
+def author(folder,meta,sheets,cancel,progress,*,brief=None):
     from .scene_pipeline import build
-    return build(folder,meta,cancel,progress)
+    return build(folder,meta,cancel,progress,brief=brief)
 
 
 def request_scene(folder,meta,images,cancel,*,context='',timeout=150,tag='analysis',response_model=SceneProject):

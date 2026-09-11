@@ -84,3 +84,62 @@ def test_model_images_preserve_one_viewport_per_attachment(tmp_path):
     for path in paths:
         with Image.open(path) as image:assert image.size==(160,90), 'A collage changes the coordinate system the model sees.'
     assert paths[-1].name=='frame-000003-0.300s.jpg'
+
+
+def test_detailed_analysis_uses_shorter_scenes_without_losing_frames():
+    scan=dict(decoded_frames=556,fps=60,budget=384,visual_jump_frames=[])
+    ranges=scenes.intervals(scan)
+    assert max(b-a for a,b in ranges)<=198
+    assert len(ranges)==3, 'A 0.27-second tail should not require a fourth model request.'
+    assert [n for a,b in ranges for n in range(a,b)]==list(range(556))
+
+
+def test_analysis_samples_keep_late_single_frame_flash_and_neighbors():
+    scan=dict(sample_frames=list(range(180)),visual_jump_frames=[151,152])
+    indices=scenes.sample_indices(0,180,scan)
+    assert {150,151,152,153}.issubset(indices)
+    assert {0,179}.issubset(indices)
+    assert len(indices)<=16
+
+
+def test_detailed_analysis_attaches_more_reference_frames():
+    scan=dict(sample_frames=list(range(180)),visual_jump_frames=[],budget=384)
+    assert len(scenes.sample_indices(0,180,scan))==24
+
+
+def test_rebuild_receives_user_instructions_and_invalidates_changed_brief(tmp_path,monkeypatch):
+    from app.models import Brief
+    (tmp_path/'source.mp4').write_bytes(b'known reference')
+    (tmp_path/'temporal.json').write_text(json.dumps(dict(fps=10,decoded_frames=30,sample_frames=[])))
+    contexts=[]
+    monkeypatch.setattr(scenes,'reference_sheets',lambda *a:[])
+    monkeypatch.setattr(scenes,'write_project',lambda *a,**kw:None)
+    monkeypatch.setattr(scenes,'preview',lambda *a,**kw:[])
+    def request(*args,**kwargs):
+        contexts.append(kwargs['context']);return project()
+    monkeypatch.setattr(scenes,'request_scene',request)
+    def build(instructions):
+        return scenes.build(tmp_path,dict(fps=10,width=320,height=180),threading.Event(),lambda *a:None,
+                            brief=Brief(instructions=instructions))
+    build('Preserve the four-panel layout.')
+    assert 'Preserve the four-panel layout.' in contexts[0]
+    build('Preserve the four-panel layout.')
+    assert len(contexts)==1
+    build('Use the exact reference typography.')
+    assert len(contexts)==2 and 'Use the exact reference typography.' in contexts[-1]
+
+
+@pytest.mark.parametrize('budget,expected_timeout',[(192,240),(384,420)])
+def test_detailed_scene_has_time_to_finish_without_extending_total_budget(tmp_path,monkeypatch,budget,expected_timeout):
+    (tmp_path/'source.mp4').write_bytes(b'known reference')
+    (tmp_path/'temporal.json').write_text(json.dumps(dict(fps=10,decoded_frames=30,sample_frames=[],budget=budget)))
+    timeouts=[]
+    monkeypatch.setattr(scenes,'reference_sheets',lambda *a:[])
+    monkeypatch.setattr(scenes,'write_project',lambda *a,**kw:None)
+    monkeypatch.setattr(scenes,'preview',lambda *a,**kw:[])
+    def request(*args,**kwargs):
+        timeouts.append(kwargs['timeout']);return project()
+    monkeypatch.setattr(scenes,'request_scene',request)
+    scenes.build(tmp_path,dict(fps=10,width=320,height=180),threading.Event(),lambda *a:None)
+    assert timeouts==[expected_timeout]
+    assert max(timeouts)<scenes.MAX_SECONDS

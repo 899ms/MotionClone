@@ -41,6 +41,8 @@ Codex is separately installed. This app uses its existing login and does not req
 
 Inputs are limited to 120 seconds, 250 MB, 4K, and 240 fps. HDR is tone-mapped to SDR and variable frame timing is normalized. Private or unavailable links may require uploading the file. Analysis/correction has an eight-minute budget; rendering and encoding take additional time. No failed rebuild is replaced by the original video.
 
+Detailed analysis uses roughly three-second sections and up to 24 individual reference frames per section. Detected flashes include neighboring frames; very short ending fragments stay with the preceding section. Detailed scene requests can use up to seven minutes within the shared eight-minute analysis budget. Custom reconstruction instructions are passed to the scene generator and included in scene checkpoint keys.
+
 ## Editable exports
 
 The HyperFrames ZIP contains composition data/code, required local assets, fonts/audio, and verification. Source video and reference screenshots are excluded. Extract it, run `npm install`, then `npm run preview` or `npm run render`. For generated projects, edit `project.json` and run `npm run sync` before external tooling reads `project.js`.

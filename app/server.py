@@ -258,7 +258,7 @@ def pipeline(id, render_only=False):
                 job['checkpoint']='analysis';persist(job)
                 sheets=sorted(folder.glob('reference-*.jpg'))
                 if not (folder/'temporal.json').exists():sheets=reference_frames(folder,cancel,progress,budget=384 if brief.sampling=='detailed' else 192)
-                author(folder,meta,sheets,cancel,progress)
+                author(folder,meta,sheets,cancel,progress,brief=brief)
             job['checkpoint']='render';persist(job)
             (folder/'brief.json').write_text(brief.model_dump_json(indent=2),encoding='utf-8')
             report=render_rebuilt(folder,brief,cancel,progress)

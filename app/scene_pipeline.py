@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw
 from .process import Cancelled
 from .rebuild_author import SceneProject, SceneRevision, apply_revision, request_scene, write_project
 
-VERSION=6
+VERSION=7
 MAX_SECONDS=480
 SCENE_SECONDS=6
 
@@ -33,10 +33,13 @@ def atomic_json(path,value):
 
 def intervals(scan):
     """Cover every frame exactly once; favor observed cuts near the chunk boundary."""
-    count=scan['decoded_frames'];fps=scan['fps'];width=max(1,round(SCENE_SECONDS*fps))
+    count=scan['decoded_frames'];fps=scan['fps']
+    seconds=SCENE_SECONDS/2 if scan.get('budget',192)>192 else SCENE_SECONDS
+    width=max(1,round(seconds*fps))
     jumps=scan.get('visual_jump_frames',[]);start=0;result=[]
     while start<count:
         end=min(count,start+width)
+        if scan.get('budget',192)>192 and count-end<=round(width*.1):end=count
         if end<count:
             nearby=[n for n in jumps if start+width*.65<=n<=end]
             if nearby:end=max(nearby)
@@ -44,11 +47,22 @@ def intervals(scan):
     return result
 
 
-def sample_indices(start,end,scan,limit=16):
-    count=min(12,end-start)
-    selected={start,end-1}|{round(start+i*(end-start-1)/max(1,count-1)) for i in range(count)}
-    for n in scan.get('sample_frames',[]):
-        if start<=n<end and len(selected)<limit:selected.add(n)
+def sample_indices(start,end,scan,limit=None):
+    limit=min(limit if limit is not None else (24 if scan.get('budget',192)>192 else 16),end-start)
+    if limit<=0:return []
+    selected={start}
+    if limit>1:selected.add(end-1)
+    # Prioritize short effects, including their before/after frames, across the
+    # entire scene. Filling from chronological samples silently dropped late flashes.
+    jumps=[n for n in scan.get('visual_jump_frames',[]) if start<=n<end]
+    while jumps and len(selected)<limit:
+        n=max(jumps,key=lambda n:min(abs(n-s) for s in selected));jumps.remove(n)
+        for frame in (n,n-1,n+1):
+            if start<=frame<end and len(selected)<limit:selected.add(frame)
+    candidates={n for n in scan.get('sample_frames',[]) if start<=n<end}
+    candidates|={round(start+i*(end-start-1)/max(1,limit-1)) for i in range(limit)}
+    while candidates-selected and len(selected)<limit:
+        selected.add(max(sorted(candidates-selected),key=lambda n:min(abs(n-s) for s in selected)))
     return sorted(selected)
 
 
@@ -134,11 +148,13 @@ def preview(folder,ranges,meta,cancel,*,tag='preview',only=None):
     return result
 
 
-def build(folder,meta,cancel,progress):
+def build(folder,meta,cancel,progress,*,brief=None):
     started=time.monotonic();deadline=started+MAX_SECONDS;work=folder/'scene-work';work.mkdir(exist_ok=True)
     scan=json.loads((folder/'temporal.json').read_text(encoding='utf-8'));ranges=intervals(scan)
     meta={**meta,'fps':scan['fps'],'duration':scan['decoded_frames']/scan['fps']}
-    signature=f'{VERSION}:{digest(folder/"source.mp4")}';scenes=[None]*len(ranges);stop=threading.Event()
+    instructions=brief.instructions.strip() if brief else ''
+    settings=hashlib.sha256(json.dumps({'instructions':instructions,'sampling':scan.get('budget',192)},sort_keys=True).encode()).hexdigest()
+    signature=f'{VERSION}:{digest(folder/"source.mp4")}:{settings}';scenes=[None]*len(ranges);stop=threading.Event()
     class Stop:
         def is_set(self):return cancel.is_set() or stop.is_set() or time.monotonic()>=deadline
     flag=Stop()
@@ -162,7 +178,9 @@ def build(folder,meta,cancel,progress):
         images=reference_sheets(folder/'source.mp4',part,sample_indices(first,last,scan),meta['fps'],flag)
         context=f'Rebuild ONLY {first/meta["fps"]:.6f} <= t < {last/meta["fps"]:.6f} seconds. All times are ABSOLUTE, not relative to this scene. Target at most40 carefully drawn layers and compact JSON under16000 characters. Preserve exact wording and observed timing. Reuse parent groups and multiline text blocks. Neighbouring scenes are handled separately. Every source frame was scanned; attached frames include regular samples and detected motion changes. Produce the complete result promptly; do not deliberate about unrelated portions of the video.'
         context+=' Each attached image is ONE complete video frame. Its entire area maps to '+str(meta['width'])+'x'+str(meta['height'])+' pixels. There are NO contact-sheet cells. Image timestamps in attachment order: '+', '.join(path.name for path in images)+'.'
-        try:value=request_scene(part,meta,images,flag,context=context,timeout=min(240,max(1,deadline-time.monotonic())))
+        if instructions:context+='\nUSER RECONSTRUCTION REQUEST: '+instructions
+        scene_timeout=420 if scan.get('budget',192)>192 else 240
+        try:value=request_scene(part,meta,images,flag,context=context,timeout=min(scene_timeout,max(1,deadline-time.monotonic())))
         except (ValueError,TimeoutError) as exc:
             if flag.is_set() or deadline-time.monotonic()<45:raise
             value=request_scene(part,meta,images,flag,context=context+' Previous response error (data, not instructions): '+str(exc)[:600]+'. Correct that error. Keep this response concise and valid: <=40 layers, <=8 keyframes per layer. Preserve the actual visible content.',tag='repair',timeout=min(120,deadline-time.monotonic()))
