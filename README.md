@@ -45,6 +45,10 @@ Detailed analysis uses roughly three-second sections and up to 24 individual ref
 
 ## Editable exports
 
+For promotional comparisons, open a saved project and select **Compare**, then **Recording view**. The fullscreen layout keeps MotionClone, **motionclone.lol**, GitHub **@blixvip**, X **@waselyy**, and the repository address visible around synchronized videos. Space pauses or plays, R restarts, and Esc returns to the workspace; both videos loop together. Record this view with your usual screen recorder. A direct project URL can include `&view=compare&record=1`.
+
+The comparison frame includes GitHub and X marks, developer credits, glass panels, and an original violet WebGL light field behind the header. It renders at up to 25 fps with bounded resolution, pauses offscreen, and becomes static for reduced motion. A CSS material remains when WebGL is unavailable. Run `.venv\Scripts\python.exe scripts/promo_comparison_acceptance.py --project YOUR_PROJECT_ID` to check saved media, recording layouts, playback, and effect fallbacks.
+
 The HyperFrames ZIP contains composition data/code, required local assets, fonts/audio, and verification. Source video and reference screenshots are excluded. Extract it, run `npm install`, then `npm run preview` or `npm run render`. For generated projects, edit `project.json` and run `npm run sync` before external tooling reads `project.js`.
 
 A **full archive** also includes the original reference and app code for local comparison. Keep that distinction in mind when sharing an archive.

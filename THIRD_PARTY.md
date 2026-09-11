@@ -1,5 +1,7 @@
 # Sources and attribution
 
+The comparison footer uses the GitHub Invertocat mark and X logo to identify the linked profiles. These marks retain their respective owners' rights; see https://github.com/logos and https://about.x.com/en/who-we-are/brand-toolkit. The comparison light-field shader is original project GLSL, with no additional rendering dependency.
+
 MotionClone's source-frame adaptation approach follows:
 
 - https://github.com/Tejashmakwana/astra-chatgpt-hyperframes
