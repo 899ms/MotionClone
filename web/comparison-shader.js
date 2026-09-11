@@ -3,7 +3,8 @@
   const stage=document.getElementById('comparison-stage');
   if(!stage)return;
   const canvas=document.createElement('canvas');
-  canvas.id='promo-shader';canvas.setAttribute('aria-hidden','true');stage.prepend(canvas);
+  const surface=document.getElementById('recording-canvas')||stage;
+  canvas.id='promo-shader';canvas.setAttribute('aria-hidden','true');surface.prepend(canvas);
   let gl;
   try{gl=canvas.getContext('webgl',{alpha:true,antialias:false,depth:false,powerPreference:'low-power'});}catch{}
   if(!gl){canvas.dataset.state='fallback';return;}
@@ -51,10 +52,11 @@
   }catch{dispose();canvas.dataset.state='fallback';return;}
   const resolution=gl.getUniformLocation(program,'resolution'),time=gl.getUniformLocation(program,'time');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const capture=new URLSearchParams(location.search).get('capture')==='1';
   let raf=0,last=0,elapsed=0,visible=false,stopped=false,count=0;
-  const eligible=()=>!stopped&&visible&&!document.hidden&&stage.classList.contains('promo-active');
+  const eligible=()=>!stopped&&visible&&!document.hidden&&stage.classList.contains('promo-active')&&(!stage.dataset.look||stage.dataset.look==='studio');
   function draw(){
-    const box=stage.getBoundingClientRect();
+    const box=surface.getBoundingClientRect();
     const scale=Math.min(devicePixelRatio||1,1.25,1400/Math.max(1,box.width),1000/Math.max(1,box.height));
     const w=Math.max(1,Math.round(box.width*scale)),h=Math.max(1,Math.round(box.height*scale));
     if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;gl.viewport(0,0,w,h);}
@@ -69,12 +71,13 @@
   function refresh(){
     cancelAnimationFrame(raf);raf=0;last=performance.now();
     if(!eligible()){canvas.dataset.state=stopped?'fallback':'paused';return;}
-    canvas.dataset.state=reduced.matches?'static':'running';draw();
-    if(!reduced.matches)raf=requestAnimationFrame(tick);
+    canvas.dataset.state=reduced.matches||capture?'static':'running';draw();
+    if(!reduced.matches&&!capture)raf=requestAnimationFrame(tick);
   }
+  window.seekComparisonShader=t=>{if(capture&&eligible()){elapsed=t*1000;draw();}};
   const intersection=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;refresh();});intersection.observe(stage);
   const resize=new ResizeObserver(refresh);resize.observe(stage);
-  const mutation=new MutationObserver(refresh);mutation.observe(stage,{attributes:true,attributeFilter:['class']});
+  const mutation=new MutationObserver(refresh);mutation.observe(stage,{attributes:true,attributeFilter:['class','data-look','data-format']});
   document.addEventListener('visibilitychange',refresh);reduced.addEventListener('change',refresh);
   const lost=event=>{event.preventDefault();stopped=true;refresh();canvas.style.visibility='hidden';};
   canvas.addEventListener('webglcontextlost',lost);

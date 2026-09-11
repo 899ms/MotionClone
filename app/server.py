@@ -414,4 +414,7 @@ def media(id:str,name:str):
     return FileResponse(path)
 
 
+from .recording_routes import install as install_recording_exports
+install_recording_exports(app, DATA, get_job, PORT)
+
 app.mount('/static',StaticFiles(directory=ROOT/'web'),name='static')
