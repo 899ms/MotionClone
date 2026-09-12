@@ -56,7 +56,7 @@ codex login
 
 ## 1. 添加参考视频
 
-粘贴 X / Twitter、YouTube、Vimeo 的公开视频链接，或视频文件的直链。也可以直接拖入文件，或点击 **Upload a video（上传视频）**。打开 **Options（选项）**，选择是否保留原视频音频。
+粘贴 X / Twitter、YouTube、Vimeo 的公开视频链接，或视频文件的直链。也可以直接拖入文件，或点击 **Upload a video（上传视频）**。打开 **Audio settings（音频设置）**，选择是否保留原视频音频；取消勾选可导出无声视频。设置在重建或渲染时生效。应用中的 **Getting started & help（入门与帮助）** 提供安装说明、简体中文指南和问题反馈入口。
 
 ![导入表单：已填入公开视频链接，旁边有重建按钮，下方有上传区域和音频选项](docs/images/01-add-reference.png)
 
