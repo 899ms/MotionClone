@@ -1,8 +1,13 @@
 <p align="center"><img src="web/assets/motionclone-wordmark-color.svg" width="280" alt="MotionClone"></p>
-<p align="center"><strong>Turn a reference video into an editable motion project.</strong></p>
-<p align="center"><a href="#run-locally">Get started</a> · <a href="docs/RECORDING.md">Recording & exports</a> · <a href="docs/DEVELOPMENT.md">Development</a></p>
 
-MotionClone is a local Windows app that uses your ChatGPT login to rebuild a video's text, shapes, artwork, and animation as editable HyperFrames layers. Paste a public video link or upload a file, compare the reconstruction with the original, then download a video or editable project.
+# MotionClone — AI motion graphics for demo and launch videos
+
+<p align="center"><strong>Rebuild reference videos as editable motion graphics with an AI coding agent.</strong></p>
+<p align="center"><a href="https://motionclone.lol">Website & examples</a> · <a href="#run-locally">Free local download</a> · <a href="docs/RECORDING.md">Recording & exports</a> · <a href="docs/DEVELOPMENT.md">Development</a></p>
+
+MotionClone is a local Windows app that uses **Codex and your ChatGPT login** to rebuild reference videos as **editable AI motion graphics**. Reconstruct animated text, shapes, artwork, and transitions for product demo videos and launch-video graphics. Paste a public video link or upload a file, compare the reconstruction with the original, then download a video or editable HyperFrames project.
+
+**Free local download; bring your AI account.** The repository is available without a MotionClone subscription. ChatGPT/Codex account costs and usage limits are separate. Public source availability does not grant a project-wide open-source license; see the licensing note below.
 
 ![MotionClone workspace with a video link field, upload area, and Rebuild video button](docs/interface.png)
 
@@ -14,6 +19,19 @@ MotionClone is a local Windows app that uses your ChatGPT login to rebuild a vid
 - **A local library:** reopen saved videos, search, favorite, collect, and archive projects.
 
 **Reconstruction is approximate.** Small text, photographs, unknown fonts, complex footage, and 3D can differ significantly. Review the comparison before using the result. A completed export does not mean a perfect match.
+
+## Motion graphics, product demos, and launch videos
+
+| Workflow | Use MotionClone for | Bring yourself |
+| --- | --- | --- |
+| AI motion graphics | Rebuild reference typography, shapes, and transitions as editable layers | A reference you own or may adapt, plus review of the result |
+| Product demo videos | Adapt title sequences and feature callouts, then export the graphics | Your product screen recording, accurate copy, and final assembly |
+| Launch videos | Rework headline reveals, benefit sequences, and closing graphics | Your brand assets, product footage, audio rights, and launch message |
+| AI coding agents | Edit exported HyperFrames code and preview/render revisions | The exported README, a specific edit brief, and an agent capable of code edits |
+
+MotionClone starts with a reference video. It does not automatically record your app or produce a complete product demo from a script alone.
+
+Read the [motion graphics guide](https://motionclone.lol/ai-motion-graphics), [demo video workflow](https://motionclone.lol/ai-demo-videos), [launch video workflow](https://motionclone.lol/ai-launch-videos), and [agent guide](docs/AGENT-WORKFLOW.md).
 
 ## Run locally
 
