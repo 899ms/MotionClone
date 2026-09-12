@@ -54,7 +54,7 @@ No API key is required. MotionClone uses your Codex login. For a different model
 
 ## 1. Add your reference
 
-Paste a public link from X / Twitter, YouTube, Vimeo, or a direct video URL. You can also drag in a file or choose **Upload a video**. Open **Options** to choose whether to keep the original audio.
+Paste a public link from X / Twitter, YouTube, Vimeo, or a direct video URL. You can also drag in a file or choose **Upload a video**. Open **Audio settings** to keep the original soundtrack or export silently. This choice applies when you rebuild or render. **Getting started & help** in the app links to setup, the Chinese guide, and issue reporting.
 
 ![The import form with a public reference link, Rebuild video button, upload area, and audio options](docs/images/01-add-reference.png)
 
