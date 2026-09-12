@@ -1,53 +1,43 @@
-<p align="center"><img src="web/assets/motionclone-wordmark-color.svg" width="280" alt="MotionClone"></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/motionclone-wordmark-light.png">
+    <img src="docs/images/motionclone-wordmark.png" width="320" alt="MotionClone">
+  </picture>
+</p>
 
-# MotionClone — AI motion graphics for demo and launch videos
+# MotionClone: AI motion graphics from a reference
 
-<p align="center"><strong>Rebuild reference videos as editable motion graphics with an AI coding agent.</strong></p>
-<p align="center"><a href="https://motionclone.lol">Website & examples</a> · <a href="#run-locally">Free local download</a> · <a href="docs/RECORDING.md">Recording & exports</a> · <a href="docs/DEVELOPMENT.md">Development</a></p>
+Give MotionClone a reference video. It uses Codex and your ChatGPT account to rebuild the text, shapes, artwork, and animation as an **editable HyperFrames project**. Change the copy, adjust the timing, and use the graphics in a product demo or launch video.
 
-MotionClone is a local Windows app that uses **Codex and your ChatGPT login** to rebuild reference videos as **editable AI motion graphics**. Reconstruct animated text, shapes, artwork, and transitions for product demo videos and launch-video graphics. Paste a public video link or upload a file, compare the reconstruction with the original, then download a video or editable HyperFrames project.
+<p>
+  <a href="https://motionclone.lol">Try the online studio</a> ·
+  <a href="#run-locally">Run locally on Windows</a> ·
+  <a href="docs/AGENT-WORKFLOW.md">Use with a coding agent</a>
+</p>
 
-**Free local download; bring your AI account.** The repository is available without a MotionClone subscription. ChatGPT/Codex account costs and usage limits are separate. Public source availability does not grant a project-wide open-source license; see the licensing note below.
+<a href="https://buymeacoffee.com/blix"><img src="web/assets/buymeacoffee-yellow.png" width="170" alt="Buy blix a coffee"></a>
 
-![MotionClone workspace with a video link field, upload area, and Rebuild video button](docs/interface.png)
+[![Actual MotionClone playback: original reference on the left, reconstructed motion on the right](docs/images/motionclone-in-action.gif)](https://motionclone.lol/#examples)
 
-## What you get
+*An actual saved reconstruction. Original on the left, MotionClone on the right. [Watch with playback controls](https://motionclone.lol/#examples) · [View a still](docs/images/hero-comparison.png)*
 
-- **Editable layers:** generated text, CSS, SVG, and animation code in a HyperFrames project.
-- **Original vs. rebuilt playback:** synchronized play, pause, seeking, and audio to inspect differences.
-- **Ready-to-share comparisons:** six recording looks, three canvas formats, and three video arrangements.
-- **A local library:** reopen saved videos, search, favorite, collect, and archive projects.
-
-**Reconstruction is approximate.** Small text, photographs, unknown fonts, complex footage, and 3D can differ significantly. Review the comparison before using the result. A completed export does not mean a perfect match.
-
-## Motion graphics, product demos, and launch videos
-
-| Workflow | Use MotionClone for | Bring yourself |
-| --- | --- | --- |
-| AI motion graphics | Rebuild reference typography, shapes, and transitions as editable layers | A reference you own or may adapt, plus review of the result |
-| Product demo videos | Adapt title sequences and feature callouts, then export the graphics | Your product screen recording, accurate copy, and final assembly |
-| Launch videos | Rework headline reveals, benefit sequences, and closing graphics | Your brand assets, product footage, audio rights, and launch message |
-| AI coding agents | Edit exported HyperFrames code and preview/render revisions | The exported README, a specific edit brief, and an agent capable of code edits |
-
-MotionClone starts with a reference video. It does not automatically record your app or produce a complete product demo from a script alone.
-
-Read the [motion graphics guide](https://motionclone.lol/ai-motion-graphics), [demo video workflow](https://motionclone.lol/ai-demo-videos), [launch video workflow](https://motionclone.lol/ai-launch-videos), and [agent guide](docs/AGENT-WORKFLOW.md).
+The local app is free to download and has no MotionClone subscription. **ChatGPT/Codex account costs and usage limits are separate.** Reconstruction is approximate: small text, unfamiliar fonts, photographs, and complex 3D can need more work.
 
 ## Run locally
 
-Install these first:
+The walkthrough below uses the Windows app. The [online studio](https://motionclone.lol) is also in early access; it requires sign-in, a separate ChatGPT connection, and an available processing worker.
 
-| Requirement | Used for |
+Have these installed before running the launcher:
+
+| Requirement | What it does |
 | --- | --- |
-| Windows | Supported launcher and local workflow |
-| Git | Cloning this repository |
-| Python 3.11+ | Local app and media pipeline |
-| Node.js 22+ and npm | HyperFrames rendering |
-| FFmpeg and ffprobe | Reading and encoding video |
-| Google Chrome | Browser rendering and checks |
-| Official Codex CLI with a ChatGPT login | AI analysis and reconstruction |
+| Windows, Git, Python 3.11+ | Runs the local app |
+| Node.js 22+ and npm | Runs HyperFrames |
+| FFmpeg and ffprobe | Reads and exports video |
+| Google Chrome | Renders the animation |
+| Official Codex CLI with ChatGPT account access | Analyzes and reconstructs the reference |
 
-Make `git`, `python`, `npm`, `ffmpeg`, `ffprobe`, and `codex` available on PATH. Then run in PowerShell:
+Make `git`, `python`, `npm`, `ffmpeg`, `ffprobe`, and `codex` available on PATH. In PowerShell:
 
 ```powershell
 git clone https://github.com/blixvip/MotionClone.git
@@ -56,61 +46,121 @@ codex login
 .\start.ps1
 ```
 
-The launcher installs the locked Python and HyperFrames dependencies, starts the server, and opens **http://127.0.0.1:4319**. First launch needs an internet connection. Later, run `start.ps1` again or double-click **Start MotionClone.vbs**.
+The launcher installs the locked dependencies and opens **http://127.0.0.1:4319**. First launch needs an internet connection. Next time, run `start.ps1` or double-click **Start MotionClone.vbs**.
 
-**No API key required.** AI work uses your existing Codex login and account access. The default model is `gpt-6-astra`. To choose another model available to your account, set `$env:FRAMEFORGE_MODEL = "YOUR_MODEL_NAME"` before launching. The `FRAMEFORGE_` name is retained for compatibility.
+No API key is required. MotionClone uses your Codex login. For a different model available to your account, set `FRAMEFORGE_MODEL` before starting the app; the older environment-variable name is kept for compatibility.
 
-## Rebuild your first video
+## 1. Add your reference
 
-1. **Add a reference.** Paste a public HTTPS link from X / Twitter, YouTube, Vimeo, or a direct video URL. You can also upload a file. Open **Options** to change the original-audio setting.
-2. **Select Rebuild video.** The progress view shows the current stage. Completed scenes are saved for retries.
-3. **Review the result.** Switch between **Rebuilt**, **Reference**, and **Compare & export**. The comparison plays both videos together.
-4. **Download.** Choose a comparison MP4, editable project, or rebuilt-only video using the options below.
-5. **Return later.** Open **Saved videos** to find and organize your projects.
+Paste a public link from X / Twitter, YouTube, Vimeo, or a direct video URL. You can also drag in a file or choose **Upload a video**. Open **Options** to choose whether to keep the original audio.
 
-![Actual saved Leo reference and reconstruction in the synchronized comparison view](docs/comparison.png)
+![The import form with a public reference link, Rebuild video button, upload area, and audio options](docs/images/01-add-reference.png)
 
-*Real saved reconstruction; differences between the two videos remain visible.*
+Start with a short clip whose typography and movement are easy to read. Use footage you own or have permission to adapt. Local inputs can be up to **120 seconds and 250 MB**.
 
-## Choose the right download
+## 2. Rebuild the motion
 
-| You want | Use | You receive |
-| --- | --- | --- |
-| A branded original/rebuilt comparison | **Compare & export**, choose the style, format, and arrangement, then **Download MP4** | The full comparison video, including original audio when retained |
-| Editable text, shapes, and animation | **Editable project** | A HyperFrames ZIP with project code and required assets |
-| Only the reconstructed video | **Export details → Rebuilt video only** | The unframed rebuild |
+Click **Rebuild video**. MotionClone analyzes reference frames, builds the animation, and renders the result. The progress view shows the current stage; completed scenes are saved for retries.
 
-In **Compare & export**, expand **Choose a style** for Studio, Editorial, Signal, Cobalt, Peach, or Monochrome. Formats are landscape (1920 × 1080), portrait (1080 × 1920), and square (1080 × 1080).
+When it finishes, your rebuilt video appears with its download options:
 
-![Six recording styles with independent format and arrangement controls](docs/recording-looks.png)
+![A completed Leo reconstruction with the rebuilt video and MP4 and editable-project downloads](docs/images/02-rebuilt-video.png)
 
-To edit a HyperFrames ZIP, extract it, run `npm install`, then `npm run preview`. Follow the ZIP's README: generated scenes use `project.json` plus `npm run sync`; authored scenes use `scene-*.js` and `tokens.css`. Run `npm run render` to create a video. Source video and reference screenshots are excluded from this ZIP. A full archive includes the original reference and app code.
+This is a saved result. Downloading, AI analysis, rendering, and encoding each take time. Failed rebuilds report an error; the original video is never substituted for a failed reconstruction.
 
-See [Recording and exports](docs/RECORDING.md) for fullscreen controls, saved local view links, export behavior, and legacy projects.
+## 3. Check it against the original
 
-## Limits and data
+Open **Compare & export**. Play both videos together, scrub to a specific moment, or slow down playback. Check the words, shapes, spacing, and transitions before using the result.
 
-- Inputs: **120 seconds, 250 MB, up to 4K and 240 fps**. HDR becomes SDR; variable frame timing is normalized.
-- Analysis and correction share an eight-minute budget. Downloading, rendering, and encoding take additional time. Failed rebuilds are not replaced with the original video.
-- Projects and media stay in `data/` on your computer. **Selected reference frames go to ChatGPT** for analysis; source downloads contact the video service. This is not an offline-only app.
-- Screenshots show saved examples. Reference videos and completed projects are not bundled with a fresh clone.
+![Synchronized original and rebuilt videos, with shared playback, seeking, speed, and audio controls](docs/images/03-compare.png)
 
-## Troubleshooting
+The **Rebuilt** and **Reference** tabs let you inspect either video on its own. A successful export means a file was produced; the comparison tells you how closely the motion matches.
 
-| Problem | Next step |
+## 4. Choose how to present it
+
+Expand **Choose a style**. Pick Studio, Editorial, Signal, Cobalt, Peach, or Monochrome, then choose the **Format** and **Arrangement** separately.
+
+![All six recording styles and the independent format and arrangement controls](docs/images/04-style-picker.png)
+
+Comparison exports support landscape **1920 × 1080**, portrait **1080 × 1920**, and square **1080 × 1080**. Use side-by-side, stacked, or rebuild-spotlight arrangements. **Fullscreen** opens the recording view.
+
+<p align="center">
+  <img src="docs/images/portrait-comparison.png" width="380" alt="The actual System Prompts reference and reconstruction in a portrait Signal comparison">
+</p>
+
+*The System Prompts example in a portrait comparison. Both the source and reconstructed animation remain visible.*
+
+## 5. Download a video or keep editing
+
+![Completed-project controls for downloading an MP4 or an editable HyperFrames project](docs/images/05-downloads.png)
+
+| If you want… | Choose… |
 | --- | --- |
-| A command is not found | Install the matching prerequisite, add it to PATH, and reopen PowerShell |
-| The app asks you to connect ChatGPT | Run `codex login`, then refresh the connection in the app |
-| A link cannot be downloaded | Upload the video file instead; private or unavailable links may fail |
-| The server does not start | Check `server-error.log` in the project folder |
-| The result looks different | Inspect both videos in Compare & export; reconstruction fidelity varies |
+| The complete original/rebuilt comparison | **Compare & export → Download MP4** |
+| Only the reconstructed animation | **Export details → Rebuilt video only** |
+| Text, shapes, assets, and animation code to edit | **Editable project** |
 
-## Development and support
+The comparison MP4 uses the selected style, format, and arrangement. It includes the original audio when that audio was retained, even if preview playback is muted.
 
-After setup, run `.venv\Scripts\python.exe -m pytest -q` for the Python tests. See [Development and verification](docs/DEVELOPMENT.md) for browser checks, screenshot capture, project layout, and the optional showcase at `/?demo=1`.
+For an editable project, extract the ZIP and read its included README. From that folder:
 
-Report reproducible problems in [GitHub Issues](https://github.com/blixvip/MotionClone/issues). Include the steps and relevant error text; remove private project details.
+```powershell
+npm install
+npm run preview
+```
 
-See [THIRD_PARTY.md](THIRD_PARTY.md) and [licenses/](licenses/) for attribution. **No project-wide open-source license has been assigned.**
+Generated scenes use `project.json` and `npm run sync`. Authored scenes use `scene-*.js` and `tokens.css`. Once the changes look right, run `npm run render` to make a video.
 
-<a href="https://buymeacoffee.com/blix"><img src="web/assets/buymeacoffee-yellow.png" width="170" alt="Support blix on Buy Me a Coffee"></a>
+A coding agent can work on the exported project too. Give it a specific edit:
+
+```text
+Read this project's README and package.json.
+Replace the headline with our product name and use our brand colors.
+Keep the current scene duration and entrance animation.
+Preview the result. Check for clipped text and missing assets before rendering.
+```
+
+The editable ZIP includes project code and required assets, fonts, and audio. It excludes the original reference video and reference screenshots. See [Recording and exports](docs/RECORDING.md) for the full archive, local view links, and export details.
+
+## 6. Pick up where you left off
+
+Open **Saved videos** to find a previous project. Search by name, filter favorites or ready videos, and organize projects into collections. Reopen a result to compare it or download it again.
+
+![Saved videos filtered to the Leo example, with search, favorites, status filters, and collection controls](docs/images/06-saved-videos.png)
+
+*This is an existing local library. Example projects and reference videos are not bundled with a fresh clone.*
+
+## Making a demo or launch video
+
+For a product demo, use MotionClone for an opening title or animated feature callout, then combine that graphic with your own screen recording. For a launch, adapt a headline reveal or closing sequence and replace the reference copy and assets with your own.
+
+MotionClone starts from a reference clip. Record your product workflow separately; a script alone does not produce a finished demo.
+
+Read the [motion graphics workflow](https://motionclone.lol/ai-motion-graphics), [product demo guide](https://motionclone.lol/ai-demo-videos), or [launch video guide](https://motionclone.lol/ai-launch-videos) for a worked process. The [coding-agent guide](docs/AGENT-WORKFLOW.md) covers exported project edits.
+
+## A few things to know
+
+Local projects and media live in `data/` on your computer. Selected reference frames are sent to ChatGPT for analysis, and downloading a video contacts its source service. The local app is not offline-only. Hosted storage works differently; check the online studio's account and privacy information.
+
+<details>
+<summary>Troubleshooting</summary>
+
+- **A command is missing:** install the matching prerequisite, add it to PATH, and reopen PowerShell.
+- **ChatGPT is disconnected:** run `codex login`, then refresh the connection in the app.
+- **A video link fails:** try uploading the file. Private or unavailable links may not download.
+- **The server will not start:** check `server-error.log` in the project folder.
+- **The result looks wrong:** inspect the comparison. Tiny text, missing fonts, photography, and complex motion can differ from the reference.
+
+</details>
+
+For development, run `.venv\Scripts\python.exe -m pytest -q` after setup. [Development and verification](docs/DEVELOPMENT.md) covers the code layout and browser checks. Report reproducible bugs in [GitHub Issues](https://github.com/blixvip/MotionClone/issues).
+
+No project-wide open-source license has been assigned. Third-party components keep their own licenses; see [THIRD_PARTY.md](THIRD_PARTY.md) and [licenses/](licenses/).
+
+## Made by blix
+
+If MotionClone helped with a project, you can [buy me a coffee](https://buymeacoffee.com/blix).
+
+<a href="https://buymeacoffee.com/blix"><img src="web/assets/buymeacoffee-yellow.png" width="200" alt="Buy me a coffee"></a>
+
+[GitHub @blixvip](https://github.com/blixvip) · [X @waselyyy](https://x.com/waselyyy) · [motionclone.lol](https://motionclone.lol)
