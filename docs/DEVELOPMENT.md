@@ -34,6 +34,14 @@ Browser scripts require Google Chrome and the app running at `http://127.0.0.1:4
 The `simple_workspace_acceptance.py` script specifically expects three saved Nexa projects; it is not a fresh-checkout smoke test.
 For recording and export checks, see [Recording and exports](RECORDING.md).
 
+## Account settings
+
+The header keeps Settings, Star on GitHub, and Buy me a coffee visible on desktop and mobile. Settings shows the ChatGPT account and video-processing readiness. Local sign-in uses the existing Codex credential store; disconnecting also signs the Codex CLI out. Account changes are blocked while a reconstruction is active.
+
+Run `python scripts/settings_acceptance.py` to check connection, device-code sign-in, cancellation, completion, disconnect, error recovery, keyboard focus, and responsive layouts. The script starts an isolated temporary app with a fake Codex account and never changes a real login. See the [official account protocol](https://learn.chatgpt.com/docs/app-server#authentication-endpoints) for the underlying sign-in flow.
+
+Restart a running local server after updating Python code. An older server can show Settings and its existing connection status, but sign-in controls remain unavailable until restart.
+
 ## Reconstruction details
 
 Detailed analysis uses roughly three-second sections and up to 24 individual reference frames per section. Detected flashes include neighboring frames; very short ending fragments stay with the preceding section. Detailed scene requests can use up to seven minutes within the shared eight-minute analysis budget. Custom reconstruction instructions are passed to the scene generator and included in scene checkpoint keys.
