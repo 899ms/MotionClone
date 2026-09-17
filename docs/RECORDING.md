@@ -21,7 +21,7 @@ In **Compare & export**, expand **Choose a style** to see the six looks. **Fulls
 | Peach | 9:16, rebuild spotlight | Soft peach and warm brown |
 | Monochrome | 1:1, side by side | Charcoal and white |
 
-Every look retains motionclone.lol, both labeled videos, and @waselyyy. Format and arrangement can be changed independently. The canvases are 1920 x 1080, 1080 x 1920, or 1080 x 1080 and fit the available screen without cropping either video. Vertical canvases leave extra top and bottom space. Download MP4 uses the selected native dimensions regardless of your display size.
+Every look retains motionclone.lol, both labeled videos, and @waselyyy. Format and arrangement can be changed independently. Canvas formats are landscape (1920 x 1080), portrait (1080 x 1920), square (1080 x 1080), ultrawide (3840 x 1080), and feed (1080 x 1350). Arrangements include side-by-side, stacked, rebuild spotlight, and wipe reveal. The canvas fits the available screen without cropping either video. Vertical canvases leave extra top and bottom space. Save comparison MP4 uses the selected native dimensions regardless of your display size.
 
 **Copy local view link** saves the look, format, and arrangement in a URL that opens directly into recording view on this computer. Preferences also persist in this browser. Example: `/?project=YOUR_PROJECT_ID&view=compare&record=1&look=signal&format=portrait&layout=stack`.
 

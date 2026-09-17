@@ -9,7 +9,7 @@ from fastapi.testclient import TestClient
 from app.hosted_gateway import create_gateway, signed_message, tenant_directory
 
 
-SECRET = 'test-only-' + 'x' * 48
+SECRET = 'example-gateway-test-secret-' * 3
 
 
 def headers(user='alice', path='/api/status', method='GET', body=b'', timestamp=None):
